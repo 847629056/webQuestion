@@ -172,3 +172,59 @@ js执行过程中分为主线程和工作线程
 而异步任务，就是异步执行的任务，比如ajax网络请求，setTimeout 定时函数等都属于异步任务，异步任务会通过任务队列的机制(先进先出的机制)来进行协调。
 同步和异步任务分别进入不同的执行环境，同步的进入主线程，即主执行栈，异步的进入任务队列。主线程内的任务执行完毕为空，会去任务队列读取对应的任务，推入主线程执行。 上述过程的不断重复就是我们说的 Event Loop (事件循环)
 
+# `Es6面试题`
+1.var let const
+var挂载在window上，let和const不是
+var存在变量提升，let和const没有
+var没有块级作用域的概念 可以跨块访问 let和const形成块级作用域
+作用域内 var可以重复声明同一个变量 let和const不行
+const 声明的是一个常量 不能修改
+eg : const person = {
+       name:'cc',
+       age:'18'
+     }
+    person.name = "xx"
+console.log(person) //{name:"xx",age:18}
+此时person保存的的是内存地址的指针 所以数据改变了
+
+2.解构赋值
+按照一定的模式，从数组或者对象中提取值，对变量进行赋值，只要左右两边模式相同，左边的变量就会被赋值
+
+3.数组去重
+let arr = [1,1,2,2,3]
+1)for (let i = 0; i < arr.length; i++) {
+          if (arr.indexOf(arr[i]) !== i) {
+            arr.splice(i, 1)
+            i--
+          }
+        }
+        return arr
+//arr.indexOf(i)返回的是i在数组中第一次出现的位置的索引
+
+2)Array.from(new Set(arr))
+//Array.from 是将类数组对象或可遍历对象转换成真正的数组
+  set 允许存储对象的唯一值
+  
+3）arr.filter((item, index) => arr.indexOf(item) === index)  
+
+let arr = [1,1,2,3]
+4）arr.reduce((prev, cur) => prev.includes(cur) ? prev : [...prev, cur], [])
+//includes prev是否包含cur 包含就返回true
+pre 是初始值 用于计算返回的结果 cur是数组的每一项
+
+4.数组扁平化 用于将嵌套的数组“拉平”，变成一维的数组。该方法返回一个新数组，对原数据没有影响。
+实现数组扁平化的方法
+1）arr.flat(Infinity) 括号内的参数代表拉平的层数
+2）利用递归
+flatArr(arr){
+  let tempArr = []
+  arr.map( item => {
+    if(Array.isArray(item)){
+      tempArr.concat(flatArr(item))
+    }else {
+      tempArr.push(item)
+    }
+  )
+  return tempArr
+}
+
