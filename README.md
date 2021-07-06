@@ -83,3 +83,38 @@ js采用的是词法作用域(静态作用域) 包括：全局作用域 函数�
 *显式原型和隐式原型
 每个函数对象都有一个prototype,他默认指向一个Object实例对象，即显式原型
 每个实例对象都有一个__proto__,即隐式原型，它指向构造函数的prototype
+构造函数的prototype等于实例对象的__proto__
+**当访问一个实例对象的某种属性时，现在自身的属性上找，找到返回，找不到的话沿着原型链找，找到返回，找不到返回undefined
+
+12.执行上下文
+全局执行上下文
+1）在执行全局代码前将window确定为全局执行上下文对象
+2）预解析 var 提前声明不赋值，添加为window的属性 function 提前声明且定义，添加为window的方法 this上下文指向window
+3）压栈，执行全局代码
+函数执行上下文
+1）在调用函数准备执行函数体之前，创建对应的函数执行上下文对象
+2）预解析 形参，arguments，this赋值，添加为函数执行上下文的属性 var 提前声明不赋值，添加为函数执行上下文的属性 function 提前声明且定义，添加为函数执行上下文的方法
+3）压栈，执行函数代码
+执行上下文栈
+1）在全局代码执行前，JS引擎会创建执行栈来存储所有的执行上下文对象
+2）在全局执行上下文确定后，将其压栈
+3）在函数执行上下文创建后，将其压栈
+4)在当前函数执行完后，将栈顶出栈，仍然在内存中，等待垃圾回收机制回收
+5）所有代码执行完后，栈中只剩window
+
+13.typeOf和instanceof
+typeof返回的是该类型的字符串表达  (number、string、undefined、boolean、function、object)
+typeof(null)返回的是object
+typeof对象的话,除了函数返回的都是object
+
+A instanceof B 检验A是不是B的实例 是的话返回true 不是的话返回false
+*instanceof只能判断是不是实例而不能判断具体是那种类型
+eg：[] instanceof object // true
+
+14.如何判断是否是数组
+eg：let arr = []
+1)object.prototype.toString.call(arr).splice(-1,1) // []
+2)isArray
+!!!会存在多个全局环境的问题
+3)利用构造函数 arr.constructor === Array
+4）arr instanceof Array 
