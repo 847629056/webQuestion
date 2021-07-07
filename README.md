@@ -228,3 +228,25 @@ flatArr(arr){
   return tempArr
 }
 
+5.判断一个对象是否是空对象
+String(obj) === '[object Object]' && Reflect.ownKeys(obj).length === 0
+eg:let obj = {name:'cc'} //String(obj) [object object]
+//Reflect.ownKeys()方法返回target对象自己的属性键的数组
+扩展 object.prototype.toString.call() 也可以判断是不是对象
+
+6.几种遍历的方法及区别
+1)forEach
+对数组里面的每一项执行提供的函数 不可中断 无返回值
+2)for in
+用于遍历数组或对象的属性 对数组或对象的属性进行循环操作
+3)for of
+可以用来循环遍历 数组 对象 字符串 map set 
+4)object.keys()
+Object.keys 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。
+
+7.箭头函数
+1)箭头函数本身没有this，箭头函数的this继承的是外部函数的this
+2)箭头函数没有prototype
+3)箭头函数没有construct内部方法，不能用new调用
+什么时候使用箭头函数？
+非对象的方法且不用做构造函数时，使用箭头函数
